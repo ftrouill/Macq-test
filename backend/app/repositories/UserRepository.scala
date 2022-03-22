@@ -31,21 +31,12 @@ class UserRepository @Inject()(
     collection.flatMap(_.find(BSONDocument("_id" -> id), Option.empty[User]).one[User])
   }
 
-  def findUserByUsername(username: String): Future[Option[User]] = {
+  /*def findUserByUsername(username: String): Future[Option[User]] = {
     collection.flatMap(_.find(BSONDocument("username" -> username), Option.empty[User]).one[User])
-  }
+  }*/
 
-  def addUser(user: User): Future[WriteResult] = {
+  def createUser(user: User): Future[WriteResult] = {
     collection.flatMap(_.insert(ordered = false)
       .one(user))
-  }
-  
-  def createUser(user: User): Future[WriteResult] = {
-    findUserByUsername(user.username).map { existingUser =>
-      if (existingUser.isEmpty) {        
-        collection.flatMap(_.insert(ordered = false)
-          .one(user))
-      }
-    }
   }
 }
