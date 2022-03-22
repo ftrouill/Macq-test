@@ -1,9 +1,8 @@
 # Routes
 GET     /                      controllers.AppController.index()
-# POST    /login                 controllers.UserController.login()
-# POST    /register              controllers.UserController.register()
+POST    /login                 controllers.UserController.login()
+POST    /register              controllers.UserController.register()
 GET     /users                 controllers.UserController.listUsers()
-GET     /users/:username           controllers.UserController.countUser(username: String)
 
 GET     /horses                controllers.HorseController.listHorses()
 GET     /horses/:id            controllers.HorseController.findHorse(id: String)

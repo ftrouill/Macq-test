@@ -15,36 +15,35 @@ class HorseRepository @Inject()(
   implicit executionContext: ExecutionContext,
   reactiveMongoApi: ReactiveMongoApi
 ) {
-  def collection: Future[BSONCollection] = reactiveMongoApi.database.map(db => db.collection("horses"))
+  def collection(user_token: String): Future[BSONCollection] = reactiveMongoApi.database.map(db => db.collection(user_token))
 
-  def list(limit: Int = 100): Future[Seq[Horse]] = {
-
-    collection.flatMap(
+  def list(user_token: String, limit: Int = 100): Future[Seq[Horse]] = {
+    collection(user_token).flatMap(
       _.find(BSONDocument(), Option.empty[Horse])
         .cursor[Horse](ReadPreference.Primary)
         .collect[Seq](limit, Cursor.FailOnError[Seq[Horse]]())
     )
   }
 
-  def findHorse(id: BSONObjectID): Future[Option[Horse]] = {
-    collection.flatMap(_.find(BSONDocument("_id" -> id), Option.empty[Horse]).one[Horse])
+  def findHorse(user_token: String, id: BSONObjectID): Future[Option[Horse]] = {
+    collection(user_token).flatMap(_.find(BSONDocument("_id" -> id), Option.empty[Horse]).one[Horse])
   }
 
-  def createHorse(horse: Horse): Future[WriteResult] = {
-    collection.flatMap(_.insert(ordered = false)
+  def createHorse(user_token: String, horse: Horse): Future[WriteResult] = {
+    collection(user_token).flatMap(_.insert(ordered = false)
       .one(horse))
   }
 
-  def updateHorse(id: BSONObjectID, horse: Horse):Future[WriteResult] = {
+  def updateHorse(user_token: String, id: BSONObjectID, horse: Horse):Future[WriteResult] = {
 
-    collection.flatMap(
+    collection(user_token).flatMap(
       _.update(ordered = false).one(BSONDocument("_id" -> id),
         horse)
     )
   }
 
-  def deleteHorse(id: BSONObjectID):Future[WriteResult] = {
-    collection.flatMap(
+  def deleteHorse(user_token: String, id: BSONObjectID):Future[WriteResult] = {
+    collection(user_token).flatMap(
       _.delete().one(BSONDocument("_id" -> id), Some(1))
     )
   }
