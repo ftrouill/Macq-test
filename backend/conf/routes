@@ -1,7 +1,13 @@
 # Routes
 GET     /                      controllers.AppController.index()
+
+# POST    /login                 controllers.UserController.login()
+POST    /register              controllers.UserController.register()
+GET     /users                 controllers.HorseController.listUsers()
+
+
 GET     /horses                controllers.HorseController.listHorses()
-GET     /horses/:id            controllers.HorseController.readHorse(id: String)
+GET     /horses/:id            controllers.HorseController.findHorse(id: String)
 POST    /horses                controllers.HorseController.createHorse()
 PUT     /horses/:id            controllers.HorseController.updateHorse(id: String)
 DELETE  /horses/:id            controllers.HorseController.deleteHorse(id: String)

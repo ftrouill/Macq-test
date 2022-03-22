@@ -24,10 +24,10 @@ class HorseController @Inject()(
     }
   }
 
-  def readHorse(id:String): Action[AnyContent] = Action.async { implicit request: Request[AnyContent] =>
+  def findHorse(id: String): Action[AnyContent] = Action.async { implicit request: Request[AnyContent] =>
     val objectIdTryResult = BSONObjectID.parse(id)
     objectIdTryResult match {
-      case Success(objectId) => horseRepository.readHorse(objectId).map {
+      case Success(objectId) => horseRepository.findHorse(objectId).map {
         horse => Ok(Json.toJson(horse))
       }
       case Failure(_) => Future.successful(BadRequest("Unknown horse id"))

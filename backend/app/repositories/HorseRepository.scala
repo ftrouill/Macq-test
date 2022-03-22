@@ -26,7 +26,7 @@ class HorseRepository @Inject()(
     )
   }
 
-  def readHorse(id: BSONObjectID): Future[Option[Horse]] = {
+  def findHorse(id: BSONObjectID): Future[Option[Horse]] = {
     collection.flatMap(_.find(BSONDocument("_id" -> id), Option.empty[Horse]).one[Horse])
   }
 
