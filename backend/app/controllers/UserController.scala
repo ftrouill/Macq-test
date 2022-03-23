@@ -39,10 +39,11 @@ class UserController @Inject()(
     request.body.validate[User].fold(
       _ => Future.successful(BadRequest("Cannot parse request body")),
       user => {
+        println(user)
         userRepository.login(user).map { userLogged => {
           val objectId = userLogged.get._id.get
           val token = JsString(objectId.stringify)
-          Ok(Json.obj("token" -> token))
+          Ok(Json.obj("username" -> userLogged.get.username, "token" -> token))
         }}
       }
     )

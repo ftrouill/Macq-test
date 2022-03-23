@@ -12,6 +12,6 @@ class AppController @Inject()(
 ) extends BaseController {
 
   def index(): Action[AnyContent] = Action {
-    Ok("App is working")
+    Ok("Back is up")
   }
 }
