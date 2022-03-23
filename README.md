@@ -43,8 +43,12 @@ Then, you need to start the backend server. In this case, a local server running
 `./run-backend`
 
 
-Lastly, you can run the frontend application. For this case, the local server will run on the default port (4200).
+Also, you need to run the frontend application. For this case, the local server will run on the default port (4200).
 `./run-frontend`
+
+
+Lastly, connect to a browser at the address running the *Angular* application, which is hosted on `localhost:4200`.
+`./run-browser`
 
 **Remark:** If you didn't manage to start the scripts, you can simply run the commands manually.
 
@@ -56,6 +60,13 @@ For the backend server, move to the `backend` folder and run
 
 For the frontend applicaiton, move to the `frontend` folder and run
 `ng serve`
+
+For the browser, which was *Google Chrome* when developping this application, you need to run
+`google-chrome "http://localhost:4200" --disable-web-service --user-data-dir="/tmp/chrome_dev_test"`
+
+**Remark:** When I tried to connect the frontend with the backend server, I had some issues CORS issues. In order to still make the application work, I needed to use *Google Chrome* without the CORS, by running
+`google-chrome --disable-web-security --user-data-dir="/tmp/chrome_dev_test"`
+I know it is also possible to disable such filters in the application itself, but I had not a lot of time and it was the easiest fix.
 
 ## Limitations
 
@@ -80,8 +91,3 @@ For the frontend part, the base application is based on a work already done by J
 
 As a last remark about the frontend part, I had never used *Angular* either before this technical test. I had already some very basic notions in *React-native* but I never worked with *Angular*. It was however, quite intuitive, and I am sure I will spend more time learning about this framework in the future.
 
-### Additional remarks
-
-- When I tried to connect the frontend with the backend server, I had some issues CORS issues. In order to still make the application work, I needed to use *Google Chrome* without the CORS, by running
-`google-chrome --disable-web-security --user-data-dir="/tmp/chrome_dev_test"`
-I know it is also possible to disable such filters in the application itself, but I had not a lot of time and it was the easiest fix.
