@@ -30,6 +30,10 @@ application. The list is a table with different columns:*
 
 *The user can create a new horse with all these fields*
 
+## Assumption about the user story
+
+While reading the user story, I interpreted that the client want an application that allows a user to login, and to manage his own database of horses. Hence, it is not a common database for all the users. It is done by allowing a MongoDB collection to each user, where he can freely add/edit/delete horses to his table.
+
 ## How to run the application
 
 You need to first have a running MongoDB. In this technical case, a local database hosted on the default port (27017) is used. To start it, run
