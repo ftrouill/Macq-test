@@ -25,13 +25,7 @@ export class AccountService {
     }
 
     login(username, password) {
-        return this.http.post<User>(`${environment.apiUrl}/login`, { "username": username, "password": password }, {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET,POST,OPTIONS,PUT,DELETE",
-            })
-        })
+        return this.http.post<User>(`${environment.apiUrl}/login`, { "username": username, "password": password })
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
