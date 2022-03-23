@@ -19,7 +19,7 @@ class HorseController @Inject()(
 ) extends BaseController {
 
   def listHorses(): Action[AnyContent] = Action.async { implicit request: Request[AnyContent] =>
-    horseRepository.list(request.headers.get("user_id").getOrElse("")).map {
+    horseRepository.list(request.headers.get("token").getOrElse("")).map {
       horses => Ok(Json.toJson(horses))
     }
   }
@@ -27,7 +27,7 @@ class HorseController @Inject()(
   def findHorse(id: String): Action[AnyContent] = Action.async { implicit request: Request[AnyContent] =>
     val objectIdTryResult = BSONObjectID.parse(id)
     objectIdTryResult match {
-      case Success(objectId) => horseRepository.findHorse(request.headers.get("user_id").getOrElse(""), objectId).map {
+      case Success(objectId) => horseRepository.findHorse(request.headers.get("token").getOrElse(""), objectId).map {
         horse => Ok(Json.toJson(horse))
       }
       case Failure(_) => Future.successful(BadRequest("Unknown horse id"))
@@ -38,7 +38,7 @@ class HorseController @Inject()(
     request.body.validate[Horse].fold(
       _ => Future.successful(BadRequest("Cannot parse request body")),
       horse =>
-        horseRepository.createHorse(request.headers.get("user_id").getOrElse(""), horse).map {
+        horseRepository.createHorse(request.headers.get("token").getOrElse(""), horse).map {
           _ => Created(Json.toJson(horse))
         }
     )
@@ -50,7 +50,7 @@ class HorseController @Inject()(
       horse =>{
         val objectIdTryResult = BSONObjectID.parse(id)
         objectIdTryResult match {
-          case Success(objectId) => horseRepository.updateHorse(request.headers.get("user_id").getOrElse(""), objectId, horse).map {
+          case Success(objectId) => horseRepository.updateHorse(request.headers.get("token").getOrElse(""), objectId, horse).map {
             result => Ok(Json.toJson(result.ok))
           }
           case Failure(_) => Future.successful(BadRequest("Unknown horse id"))
@@ -62,7 +62,7 @@ class HorseController @Inject()(
   def deleteHorse(id: String): Action[AnyContent]  = Action.async { implicit request => {
     val objectIdTryResult = BSONObjectID.parse(id)
     objectIdTryResult match {
-      case Success(objectId) => horseRepository.deleteHorse(request.headers.get("user_id").getOrElse(""), objectId).map {
+      case Success(objectId) => horseRepository.deleteHorse(request.headers.get("token").getOrElse(""), objectId).map {
         _ => NoContent
       }
       case Failure(_) => Future.successful(BadRequest("Unknown horse id"))

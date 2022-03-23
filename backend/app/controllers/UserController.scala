@@ -6,7 +6,7 @@ import reactivemongo.bson.BSONObjectID
 import play.api.libs.json.{Json, __}
 import scala.util.{Failure, Success}
 import scala.concurrent.{ExecutionContext, Future}
-import play.api.libs.json.JsValue
+import play.api.libs.json.{JsValue, JsString}
 
 import models.User
 import repositories.UserRepository
@@ -30,7 +30,7 @@ class UserController @Inject()(
       _ => Future.successful(BadRequest("Cannot parse request body")),
       user =>
         userRepository.createUser(user).map {
-          _ => Created(Json.toJson(user))
+          _ => Created
         }
     )
   }}
@@ -40,7 +40,9 @@ class UserController @Inject()(
       _ => Future.successful(BadRequest("Cannot parse request body")),
       user => {
         userRepository.login(user).map { userLogged => {
-          Ok(Json.toJson(userLogged))
+          val objectId = userLogged.get._id.get
+          val token = JsString(objectId.stringify)
+          Ok(Json.obj("token" -> token))
         }}
       }
     )
