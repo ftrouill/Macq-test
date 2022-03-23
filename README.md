@@ -78,4 +78,6 @@ As a last remark about the frontend part, I had never used *Angular* either befo
 
 ### Additional remarks
 
-When I tried to connect the frontend with the backend server, I had some issues CORS issues. In order to still make the application work, I needed to use *Google Chrome* without the CORS 
+- When I tried to connect the frontend with the backend server, I had some issues CORS issues. In order to still make the application work, I needed to use *Google Chrome* without the CORS, by running
+`google-chrome --disable-web-security --user-data-dir="/tmp/chrome_dev_test"`
+I know it is also possible to disable such filters in the application itself, but I had not a lot of time and it was the easiest fix.
