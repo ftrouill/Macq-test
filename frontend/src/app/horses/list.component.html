@@ -1,0 +1,35 @@
+﻿<h1>Horses</h1>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Add Horse</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 25%">Name</th>
+            <th style="width: 15%">Color</th>
+            <th style="width: 10%">Speed</th>
+            <th style="width: 25%">Breed</th>
+            <th style="width: 15%">Image</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let horse of horses">
+            <td>{{horse.name}}</td>
+            <td>{{horse.color}}</td>
+            <td>{{horse.speed}}</td>
+            <td>{{horse.breed}}</td>
+            <td>{{horse.image}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="edit/{{horse._id.$oid}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                <button (click)="deleteHorse(horse._id.$oid)" class="btn btn-sm btn-danger btn-delete-horse" [disabled]="horse.isDeleting">
+                    <span *ngIf="horse.isDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!horse.isDeleting">Delete</span>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="!horses">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
